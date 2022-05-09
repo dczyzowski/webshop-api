@@ -1,0 +1,54 @@
+.Header {
+    text-align: top;
+}
+
+.App {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: top;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+ul {
+    list-style: none;
+    list-style-image: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    display: inline;
+    text-align: -webkit-match-parent;
+}
+
+.logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+.card {
+    flex: 0 1 calc(25% - 1em);
+    color: #282c34;
+    min-height: 100%;
+}
+
+.products {
+    max-width: 1200px;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 33% 33% 33%;
+    column-gap: 10px;
+    row-gap: 15px;
+}
+
+.card-image {
+    height: 200px;
+}
+
+.products img {
+    object-fit: contain;
+}
