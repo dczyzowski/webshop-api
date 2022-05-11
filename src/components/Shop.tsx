@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react'
+import Pages from './Pages'
+import CardItem from './CardItem'
 
 function Shop() {
     return (
@@ -29,6 +31,16 @@ const Products = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [allProducts, setAllProducts] = useState<Product[]>([])
 
+    // setting up pagination
+    const [currentPage, setCurrentPage] = useState(1)
+    const pageSize = 3;
+
+    // slice tę tabele
+    const currentPageData = (): Product[] => {
+        const firstItemIndex: number = (currentPage - 1) * pageSize;
+        const lastItemIndex = firstItemIndex + pageSize;
+        return allProducts.slice(firstItemIndex, lastItemIndex)
+    };
 
     useEffect(() => {
         fetch("https://fakestoreapi.com/products")
@@ -38,9 +50,6 @@ const Products = () => {
                     setIsLoaded(true);
                     setAllProducts(result);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
@@ -54,26 +63,22 @@ const Products = () => {
         )
     }
     else if (!isLoaded) {
-        <span>Is Loading...</span>
+        <div className='products'>
+            <span>Is Loading...</span>
+        </div>
     }
     return (
-        <div className='products'>
-            {allProducts.map(item => (
-                <div className='card' style={{ width: "18rem;" }}>
-                    <div card-image><img className="card-img-top" src={item.image} alt="Card image cap"/></div>
-                    <div className="card-body">
-                        <h5 className="card-title">{item.title}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted item-price">
-                            {item.price.toLocaleString(
-                                'pl-PL', {
-                                style: 'currency',
-                                currency: 'PLN',
-                            })}
-                        </h6>
-                        <p className="card-text">{item.description}</p>
-                    </div>
-                </div>
-            ))}
+        <div>
+            <div className='products'>
+                {currentPageData().map(item => (
+                    <CardItem item={item} />
+                ))}
+            </div>
+
+            {allProducts.length !== 0 ?
+                <Pages pagesCounts={Math.ceil(allProducts.length / pageSize)} currentPage={currentPage} onPageChanged={(selectedPage) => setCurrentPage(selectedPage)} />
+                : <div> </div>
+            }
         </div>
     )
 
