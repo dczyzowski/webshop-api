@@ -4,10 +4,10 @@ function CardItem(props: { item: Product }) {
     const item = props.item;
 
     return (
-        <div className='card' style={{ width: "18rem;" }}>
+        <div className='card' style={{ width: "18rem" }}>
             <div card-image><img className="card-img-top" src={item.image} alt="Card image cap" /></div>
             <div className="card-body">
-                <h5 className="card-title">{item.title}</h5>
+                <h5 className="card-title">{item.title.toString()}</h5>
                 <h6 className="card-subtitle mb-2 text-muted item-price">
                     {item.price.toLocaleString(
                         'pl-PL', {
@@ -15,7 +15,7 @@ function CardItem(props: { item: Product }) {
                         currency: 'PLN',
                     })}
                 </h6>
-                <p className="card-text">{item.description}</p>
+                <a className="card-text">{item.description.toString()}</a>
             </div>
         </div>
     )
